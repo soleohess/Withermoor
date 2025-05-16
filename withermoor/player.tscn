@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3 uid="uid://be0q02rwmlpb0"]
+
+[ext_resource type="Texture2D" uid="uid://cxqel3ivqbelm" path="res://assets/playerSpritesheetPlaceholder.png" id="1_4flbx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3mip4"]
+atlas = ExtResource("1_4flbx")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_insbl"]
+atlas = ExtResource("1_4flbx")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rug40"]
+atlas = ExtResource("1_4flbx")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mxi64"]
+atlas = ExtResource("1_4flbx")
+region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nsdob"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3mip4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_insbl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rug40")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mxi64")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_nsdob")
