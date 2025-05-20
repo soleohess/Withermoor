@@ -11,8 +11,8 @@ config_version=5
 [application]
 
 config/name="withermoor"
-run/main_scene="uid://bo0iy13nc5vn7"
-config/features=PackedStringArray("4.4", "Forward Plus")
+run/main_scene="res://scenes/main.tscn"
+config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 
 [rendering]
