@@ -1,0 +1,1 @@
+	cmd+k on selected text to edit commented status in GDscript
