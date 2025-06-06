@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://brfn8t2ww45mk"
-path="res://.godot/imported/groundPlaceHolder.png-5ccde70c52ce94d3d520f1de6d2d8802.ctex"
+uid="uid://bn04u52p0p7wx"
+path="res://.godot/imported/tilemappreview.png-b1fb0cd644873799e8e05bf344530479.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/groundPlaceHolder.png"
-dest_files=["res://.godot/imported/groundPlaceHolder.png-5ccde70c52ce94d3d520f1de6d2d8802.ctex"]
+source_file="res://assets/tilemappreview.png"
+dest_files=["res://.godot/imported/tilemappreview.png-b1fb0cd644873799e8e05bf344530479.ctex"]
 
 [params]
 
