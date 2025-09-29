@@ -4,7 +4,13 @@ extends CharacterBody2D
 const max_x_velocity = 150.0
 const x_acceleration = max_x_velocity / 3
 const jump_velocity = -375.0
-#const MOVE_RIGHT = KEY_A
+
+#need to fix, don't know how to put keyboard inputs into an array
+#var left_inputs: Array = [Key_A, Key_LEFT]
+
+func _ready() -> void:
+	InputMap.add_action("move_left")
+	InputMap.add_action("move_right")
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
