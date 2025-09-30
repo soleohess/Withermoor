@@ -8,6 +8,8 @@ const jump_velocity = -375.0
 #need to fix, don't know how to put keyboard inputs into an array
 #var left_inputs: Array = [Key_A, Key_LEFT]
 
+#Test comment from my home computer.
+
 func _ready() -> void:
 	InputMap.add_action("move_left")
 	InputMap.add_action("move_right")
