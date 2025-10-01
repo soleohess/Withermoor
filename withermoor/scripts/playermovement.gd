@@ -10,6 +10,8 @@ const jump_velocity = -375.0
 
 #Test comment from my home computer.
 
+#Another test comment from home...
+
 func _ready() -> void:
 	InputMap.add_action("move_left")
 	InputMap.add_action("move_right")
