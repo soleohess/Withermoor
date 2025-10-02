@@ -6,13 +6,18 @@ const x_acceleration = max_x_velocity / 3
 const jump_velocity = -375.0
 
 #need to fix, don't know how to put keyboard inputs into an array
-#var left_inputs: Array = [Key_A, Key_LEFT]
+var left_inputs: Array = [InputEventKey.new()]
 
 #Test comment from my home computer.
 
 #Another test comment from home...
 
+var test: String = ""
+
 func _ready() -> void:
+	print("The type string is: ", test)
+	print(left_inputs[0])
+	print(OS.find_keycode_from_string("LEFT"))
 	InputMap.add_action("move_left")
 	InputMap.add_action("move_right")
 
@@ -22,8 +27,8 @@ func _input(event) -> void:
 	if event is InputEventKey:
 		print("Is key")
 		print(OS.get_keycode_string(event.key_label))
-		print(typeof(event))
-		print(typeof(OS.get_keycode_string(event.key_label)))
+		print(type_string(typeof(event)))
+		print(type_string(typeof(OS.get_keycode_string(event.key_label))))
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -36,6 +41,8 @@ func _physics_process(delta: float) -> void:
 	
 	#if Input.is_action_just_pressed("jump"):
 	#	print("jump")
+	
+	#Note: should probably change to Input.is_physical_key_pressed()
 	
 	#left walking
 	if Input.is_key_pressed(KEY_A) or Input.is_key_pressed(KEY_LEFT):
