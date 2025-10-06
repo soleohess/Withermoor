@@ -6,20 +6,25 @@ const x_acceleration = max_x_velocity / 3
 const jump_velocity = -375.0
 
 #need to fix, don't know how to put keyboard inputs into an array
-var left_inputs: Array = [InputEventKey.new()]
+var left_inputs: Array = [KEY_LEFT, KEY_A]
+var right_inputs: Array = [KEY_RIGHT, KEY_D]
 
 #Test comment from my home computer.
 
 #Another test comment from home...
 
-var test: String = ""
 
 func _ready() -> void:
-	print("The type string is: ", test)
-	print(left_inputs[0])
-	print(OS.find_keycode_from_string("LEFT"))
 	InputMap.add_action("move_left")
 	InputMap.add_action("move_right")
+	for input_keycode in left_inputs:
+		var new_key = InputEventKey.new()
+		new_key.keycode = input_keycode
+		InputMap.action_add_event("move_left", new_key)
+	for input_keycode in right_inputs:
+		var new_key = InputEventKey.new()
+		new_key.keycode = input_keycode
+		InputMap.action_add_event("move_right", new_key)
 
 #testing
 func _input(event) -> void:
@@ -45,20 +50,21 @@ func _physics_process(delta: float) -> void:
 	#Note: should probably change to Input.is_physical_key_pressed()
 	
 	#left walking
-	if Input.is_key_pressed(KEY_A) or Input.is_key_pressed(KEY_LEFT):
+	if Input.is_action_pressed("move_left"):
 		if velocity.x >= max_x_velocity * -1:
 			velocity.x += x_acceleration * (delta * 60) * -1
 		else:
 			velocity.x = max_x_velocity * (delta * 60) * -1
+	
 	#right walking
-	if Input.is_key_pressed(KEY_D) or Input.is_key_pressed(KEY_RIGHT):
+	if Input.is_action_pressed("move_right"):
 		if velocity.x <= max_x_velocity:
 			velocity.x += x_acceleration * (delta * 60)
 		else:
 			velocity.x = max_x_velocity * (delta * 60)
 	
 	#deceleration here
-	if not (Input.is_key_pressed(KEY_A) or Input.is_key_pressed(KEY_LEFT) or Input.is_key_pressed(KEY_D) or Input.is_key_pressed(KEY_RIGHT)):
+	if not (Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right")):
 		velocity.x /= 1.5 * (delta * 60)
 
 	move_and_slide()
