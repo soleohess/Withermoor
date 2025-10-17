@@ -11,10 +11,10 @@ var delay_jump_restriction: float = coyote_time
 var can_jump: bool = false
 var post_jump_timer: float = 1.0
 
-#need to fix, don't know how to put keyboard inputs into an array
-var left_inputs: Array = [KEY_LEFT, KEY_A]
-var right_inputs: Array = [KEY_RIGHT, KEY_D]
-var jump_inputs: Array = [KEY_SPACE]
+##need to fix, don't know how to put keyboard inputs into an array
+#var left_inputs: Array = [KEY_LEFT, KEY_A]
+#var right_inputs: Array = [KEY_RIGHT, KEY_D]
+#var jump_inputs: Array = [KEY_SPACE]
 
 var input_map_dict: Dictionary = {
 	"left_inputs": [KEY_LEFT, KEY_A],
@@ -86,9 +86,11 @@ func handle_jump(_delta):
 	post_jump_timer += 0.01 * (_delta * 60)
 	
 	if Input.is_action_just_pressed("jump_inputs"):
+		#queue the jump
 		post_jump_timer = 0.0
 	
 	if post_jump_timer < 0.1 and can_jump:
+		#if you just pressed jump (with input buffering) and can jump
 		velocity.y = jump_velocity * (_delta * 60)
 		can_jump = false
 	
@@ -97,7 +99,9 @@ func handle_jump(_delta):
 		can_jump = true
 	
 	elif can_jump:
+		#coyote timer
 		delay_jump_restriction -= 0.01 * (_delta * 60)
+		
 		if delay_jump_restriction > 0.0001:
 			can_jump = true
 		
