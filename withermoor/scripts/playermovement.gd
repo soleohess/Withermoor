@@ -6,15 +6,16 @@ var x_acceleration = max_x_velocity / 3
 var startup_x_percent = 0.2
 var jump_velocity = -375.0
 
+var max_jump_height: float = -80.0
+var min_jump_height: float = -8.0
+
 var coyote_time: float = 0.06
 var delay_jump_restriction: float = coyote_time
 var can_jump: bool = false
 var post_jump_timer: float = 1.0
 
-##need to fix, don't know how to put keyboard inputs into an array
-#var left_inputs: Array = [KEY_LEFT, KEY_A]
-#var right_inputs: Array = [KEY_RIGHT, KEY_D]
-#var jump_inputs: Array = [KEY_SPACE]
+#h(t) = 1/2 at^2 + v0 t
+#h_max = h(-v0/a)
 
 var input_map_dict: Dictionary = {
 	"left_inputs": [KEY_LEFT, KEY_A],
@@ -30,13 +31,14 @@ var input_map_dict: Dictionary = {
 func _ready() -> void:
 	#InputMap.add_action("move_left")
 	#InputMap.add_action("move_right")
-	for input_dict_key in input_map_dict:
-		InputMap.add_action(input_dict_key)
-		if typeof(input_map_dict[input_dict_key]) == TYPE_ARRAY:
-			for input_keycode in input_map_dict[input_dict_key]:
-				var new_key = InputEventKey.new()
-				new_key.keycode = input_keycode
-				InputMap.action_add_event(input_dict_key, new_key)
+	#for input_dict_key in input_map_dict:
+		#InputMap.add_action(input_dict_key)
+		#if typeof(input_map_dict[input_dict_key]) == TYPE_ARRAY:
+			#for input_keycode in input_map_dict[input_dict_key]:
+				#var new_key = InputEventKey.new()
+				#new_key.keycode = input_keycode
+				#InputMap.action_add_event(input_dict_key, new_key)
+	configure_inputs(input_map_dict)
 
 #testing
 func _input(event) -> void:
@@ -52,9 +54,19 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 	
+	
 	handle_walk(delta)
 	handle_jump(delta)
 	move_and_slide()
+
+func configure_inputs(_input_map: Dictionary):
+	for input_dict_key in _input_map:
+		InputMap.add_action(input_dict_key)
+		if typeof(input_map_dict[input_dict_key]) == TYPE_ARRAY:
+			for input_keycode in input_map_dict[input_dict_key]:
+				var new_key = InputEventKey.new()
+				new_key.keycode = input_keycode
+				InputMap.action_add_event(input_dict_key, new_key)
 
 func handle_walk(_delta) -> bool:
 	#Note: could change to Input.is_physical_key_pressed()
