@@ -6,7 +6,7 @@ var x_acceleration = max_x_velocity / 3
 var startup_x_percent = 0.2
 var jump_velocity = -375.0
 
-var coyote_time: float = 0.1
+var coyote_time: float = 0.06
 var delay_jump_restriction: float = coyote_time
 var can_jump: bool = false
 var post_jump_timer: float = 1.0
@@ -56,7 +56,7 @@ func _physics_process(delta: float) -> void:
 	handle_jump(delta)
 	move_and_slide()
 
-func handle_walk(_delta):
+func handle_walk(_delta) -> bool:
 	#Note: could change to Input.is_physical_key_pressed()
 	
 	#left walking
@@ -80,8 +80,10 @@ func handle_walk(_delta):
 	#deceleration here
 	if not (Input.is_action_pressed("left_inputs") or Input.is_action_pressed("right_inputs")):
 		velocity.x /= 1.5 * (_delta * 60)
+	
+	return (Input.is_action_pressed("left_inputs") or Input.is_action_pressed("right_inputs"))
 
-func handle_jump(_delta):
+func handle_jump(_delta) -> bool:
 	
 	post_jump_timer += 0.01 * (_delta * 60)
 	
@@ -107,3 +109,5 @@ func handle_jump(_delta):
 		
 		else:
 			can_jump = false
+	
+	return Input.is_action_just_pressed("jump_inputs")
