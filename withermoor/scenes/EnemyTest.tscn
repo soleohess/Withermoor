@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://bni7k3iwrys1x"]
+
+[ext_resource type="Texture2D" uid="uid://kncabpjcj4qe" path="res://assets/EnemyPlaceholder2.png" id="1_t0qpu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t0qpu"]
+size = Vector2(8, 16)
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_t0qpu")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_t0qpu")
