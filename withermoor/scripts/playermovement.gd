@@ -14,6 +14,8 @@ var delay_jump_restriction: float = coyote_time
 var can_jump: bool = false
 var post_jump_timer: float = 1.0
 
+var jump_debug_timer:float = 0.0
+
 #h(t) = 1/2 at^2 + v0 t
 #h_max = h(-v0/a)
 
@@ -41,13 +43,13 @@ func _ready() -> void:
 	configure_inputs(input_map_dict)
 
 #testing
-func _input(event) -> void:
-	print(event)
-	if event is InputEventKey:
-		print("Is key")
-		print(OS.get_keycode_string(event.key_label))
-		print(type_string(typeof(event)))
-		print(type_string(typeof(OS.get_keycode_string(event.key_label))))
+#func _input(event) -> void:
+	#print(event)
+	#if event is InputEventKey:
+		#print("Is key")
+		#print(OS.get_keycode_string(event.key_label))
+		#print(type_string(typeof(event)))
+		#print(type_string(typeof(OS.get_keycode_string(event.key_label))))
 
 func _physics_process(delta: float) -> void:
 	# Gravity
@@ -56,7 +58,7 @@ func _physics_process(delta: float) -> void:
 	
 	
 	handle_walk(delta)
-	handle_jump(delta)
+	handle_variable_jump(delta)
 	move_and_slide()
 
 func configure_inputs(_input_map: Dictionary):
@@ -109,6 +111,45 @@ func handle_jump(_delta) -> bool:
 		can_jump = false
 	
 	if is_on_floor():
+		delay_jump_restriction = coyote_time
+		can_jump = true
+	
+	elif can_jump:
+		#coyote timer
+		delay_jump_restriction -= 0.01 * (_delta * 60)
+		
+		if delay_jump_restriction > 0.0001:
+			can_jump = true
+		
+		else:
+			can_jump = false
+	
+	return Input.is_action_just_pressed("jump_inputs")
+
+
+func handle_variable_jump(_delta) -> bool:
+	
+	post_jump_timer += 0.01 * (_delta * 60)
+	jump_debug_timer += _delta
+	
+	if velocity.y <= 0.0 + 1.0 and velocity.y >= 0.0 - 1.0:
+		print("timer " + str(jump_debug_timer))
+		print("velocity  " + str(velocity.y))
+	
+	if Input.is_action_just_pressed("jump_inputs"):
+		#queue the jump
+		post_jump_timer = 0.0
+	
+	if post_jump_timer < 0.1 and can_jump:
+		#if you just pressed jump (with input buffering) and can jump
+		velocity.y = jump_velocity * (_delta * 60)
+		jump_debug_timer = 0.0
+		print(jump_debug_timer)
+		can_jump = false
+	
+	if is_on_floor():
+		if not can_jump:
+			print(jump_debug_timer)
 		delay_jump_restriction = coyote_time
 		can_jump = true
 	
