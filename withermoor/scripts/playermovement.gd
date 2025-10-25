@@ -6,15 +6,15 @@ var x_acceleration = max_x_velocity / 3
 var startup_x_percent = 0.2
 var jump_velocity = -375.0
 
-var max_jump_height: float = -80.0
-var min_jump_height: float = -8.0
+var min_jump_time: float = 0.04
+var jump_release_rate: float = 1.5
 
 var coyote_time: float = 0.06
 var delay_jump_restriction: float = coyote_time
 var can_jump: bool = false
-var post_jump_timer: float = 1.0
+var jump_input_timer: float = 1.0
 
-var jump_debug_timer:float = 0.0
+var jump_debug_timer: float = 0.0
 
 #h(t) = 1/2 at^2 + v0 t
 #h_max = h(-v0/a)
@@ -31,15 +31,6 @@ var input_map_dict: Dictionary = {
 
 
 func _ready() -> void:
-	#InputMap.add_action("move_left")
-	#InputMap.add_action("move_right")
-	#for input_dict_key in input_map_dict:
-		#InputMap.add_action(input_dict_key)
-		#if typeof(input_map_dict[input_dict_key]) == TYPE_ARRAY:
-			#for input_keycode in input_map_dict[input_dict_key]:
-				#var new_key = InputEventKey.new()
-				#new_key.keycode = input_keycode
-				#InputMap.action_add_event(input_dict_key, new_key)
 	configure_inputs(input_map_dict)
 
 #testing
@@ -99,13 +90,13 @@ func handle_walk(_delta) -> bool:
 
 func handle_jump(_delta) -> bool:
 	
-	post_jump_timer += 0.01 * (_delta * 60)
+	jump_input_timer += 0.01 * (_delta * 60)
 	
 	if Input.is_action_just_pressed("jump_inputs"):
 		#queue the jump
-		post_jump_timer = 0.0
+		jump_input_timer = 0.0
 	
-	if post_jump_timer < 0.1 and can_jump:
+	if jump_input_timer < 0.1 and can_jump:
 		#if you just pressed jump (with input buffering) and can jump
 		velocity.y = jump_velocity * (_delta * 60)
 		can_jump = false
@@ -129,23 +120,22 @@ func handle_jump(_delta) -> bool:
 
 func handle_variable_jump(_delta) -> bool:
 	
-	post_jump_timer += 0.01 * (_delta * 60)
+	jump_input_timer += _delta
 	jump_debug_timer += _delta
 	
-	if velocity.y <= 0.0 + 1.0 and velocity.y >= 0.0 - 1.0:
-		print("timer " + str(jump_debug_timer))
-		print("velocity  " + str(velocity.y))
 	
 	if Input.is_action_just_pressed("jump_inputs"):
 		#queue the jump
-		post_jump_timer = 0.0
+		jump_input_timer = 0.0
 	
-	if post_jump_timer < 0.1 and can_jump:
+	if jump_input_timer < 0.1 and can_jump:
 		#if you just pressed jump (with input buffering) and can jump
 		velocity.y = jump_velocity * (_delta * 60)
 		jump_debug_timer = 0.0
-		print(jump_debug_timer)
 		can_jump = false
+	
+	if jump_debug_timer > min_jump_time and velocity.y < 0.0 and not Input.is_action_pressed("jump_inputs"):
+		velocity.y = velocity.y / jump_release_rate
 	
 	if is_on_floor():
 		if not can_jump:
