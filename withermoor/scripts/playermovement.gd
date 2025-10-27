@@ -65,7 +65,7 @@ func handle_walk(_delta) -> bool:
 	#Note: could change to Input.is_physical_key_pressed()
 	
 	#left walking
-	if Input.is_action_pressed("left_inputs"):
+	if Input.is_action_pressed("left_inputs") and not Input.is_action_pressed("right_inputs"):
 		if velocity.x >= max_x_velocity * startup_x_percent * -1:
 			velocity.x = max_x_velocity * startup_x_percent * -1
 		if velocity.x >= max_x_velocity * -1:
@@ -74,7 +74,7 @@ func handle_walk(_delta) -> bool:
 			velocity.x = max_x_velocity * (_delta * 60) * -1
 	
 	#right walking
-	if Input.is_action_pressed("right_inputs"):
+	if Input.is_action_pressed("right_inputs") and not Input.is_action_pressed("left_inputs"):
 		if velocity.x <= max_x_velocity * startup_x_percent:
 			velocity.x = max_x_velocity * startup_x_percent
 		if velocity.x <= max_x_velocity:
