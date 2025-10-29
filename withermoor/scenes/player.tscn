@@ -55,7 +55,3 @@ autoplay = "default_idle"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -15.5)
 shape = SubResource("RectangleShape2D_4flbx")
-
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(0, -46)
-zoom = Vector2(2, 2)
