@@ -7,8 +7,9 @@ size = Vector2(8, 16)
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_t0qpu")
-
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_t0qpu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_t0qpu")
+debug_color = Color(0, 0.6, 0.7019608, 0.41960785)
