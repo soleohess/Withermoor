@@ -47,6 +47,11 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 	
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		print("Collided with: ", collision.get_collider().name)
+		print("Collided with object of group: ", collision)
+
 	
 	handle_walk(delta)
 	handle_jump(delta)
