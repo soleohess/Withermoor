@@ -49,7 +49,7 @@ func _physics_process(delta: float) -> void:
 	
 	
 	handle_walk(delta)
-	handle_variable_jump(delta)
+	handle_jump(delta)
 	move_and_slide()
 
 func configure_inputs(_input_map: Dictionary):
@@ -88,37 +88,8 @@ func handle_walk(_delta) -> bool:
 	
 	return (Input.is_action_pressed("left_inputs") or Input.is_action_pressed("right_inputs"))
 
+
 func handle_jump(_delta) -> bool:
-	
-	jump_input_timer += 0.01 * (_delta * 60)
-	
-	if Input.is_action_just_pressed("jump_inputs"):
-		#queue the jump
-		jump_input_timer = 0.0
-	
-	if jump_input_timer < 0.1 and can_jump:
-		#if you just pressed jump (with input buffering) and can jump
-		velocity.y = jump_velocity * (_delta * 60)
-		can_jump = false
-	
-	if is_on_floor():
-		delay_jump_restriction = coyote_time
-		can_jump = true
-	
-	elif can_jump:
-		#coyote timer
-		delay_jump_restriction -= 0.01 * (_delta * 60)
-		
-		if delay_jump_restriction > 0.0001:
-			can_jump = true
-		
-		else:
-			can_jump = false
-	
-	return Input.is_action_just_pressed("jump_inputs")
-
-
-func handle_variable_jump(_delta) -> bool:
 	
 	jump_input_timer += _delta
 	jump_debug_timer += _delta
