@@ -47,6 +47,7 @@ height = 6.0
 size = Vector2(6, 31)
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
+collision_layer = 2
 script = ExtResource("1_g2els")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -56,15 +57,18 @@ sprite_frames = SubResource("SpriteFrames_nsdob")
 animation = &"default_idle"
 autoplay = "default_idle"
 
-[node name="ground_check" type="Area2D" parent="."]
-collision_layer = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ground_check"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -3)
 shape = SubResource("CapsuleShape2D_g2els")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="enemy_check" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="enemy_check"]
 position = Vector2(0, -15.5)
 shape = SubResource("RectangleShape2D_4flbx")
 
-[connection signal="body_entered" from="ground_check" to="." method="_on_ground_check_body_entered"]
+[connection signal="area_entered" from="enemy_check" to="." method="_on_enemy_check_area_entered"]
+[connection signal="body_entered" from="enemy_check" to="." method="_on_enemy_check_body_entered"]
+[connection signal="body_entered" from="enemy_check" to="." method="_on_ground_check_body_entered"]

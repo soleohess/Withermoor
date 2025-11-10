@@ -25,22 +25,10 @@ var input_map_dict: Dictionary = {
 	"jump_inputs": [KEY_SPACE]
 	}
 
-#Test comment from my home computer.
-
-#Another test comment from home...
-
 
 func _ready() -> void:
 	configure_inputs(input_map_dict)
 
-#testing
-#func _input(event) -> void:
-	#print(event)
-	#if event is InputEventKey:
-		#print("Is key")
-		#print(OS.get_keycode_string(event.key_label))
-		#print(type_string(typeof(event)))
-		#print(type_string(typeof(OS.get_keycode_string(event.key_label))))
 
 func _physics_process(delta: float) -> void:
 	# Gravity
@@ -51,6 +39,10 @@ func _physics_process(delta: float) -> void:
 	handle_walk(delta)
 	handle_jump(delta)
 	move_and_slide()
+
+func _on_enemy_check_body_entered(body: Node2D) -> void:
+	print("The enemy_check collided with:")
+	print(body)
 
 func configure_inputs(_input_map: Dictionary):
 	for input_dict_key in _input_map:
@@ -88,7 +80,6 @@ func handle_walk(_delta) -> bool:
 	
 	return (Input.is_action_pressed("left_inputs") or Input.is_action_pressed("right_inputs"))
 
-
 func handle_jump(_delta) -> bool:
 	
 	jump_input_timer += _delta
@@ -125,4 +116,3 @@ func handle_jump(_delta) -> bool:
 			can_jump = false
 	
 	return Input.is_action_just_pressed("jump_inputs")
-	

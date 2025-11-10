@@ -8,6 +8,7 @@ class_name enemy
 @export var does_contact_damage: bool = false
 @export var contact_damage_value: float = 0.0
 @export var has_gravity: bool = true
+@export var is_alerted: bool = false
 
 func _physics_process(delta: float) -> void:
 	if has_gravity and not is_on_floor():
