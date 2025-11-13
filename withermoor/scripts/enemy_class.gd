@@ -10,8 +10,24 @@ class_name enemy
 @export var has_gravity: bool = true
 @export var is_alerted: bool = false
 
+@export var max_x: float
+@export var min_x: float
+
+func _ready() -> void:
+	speed = 30
+	max_x = 150
+	min_x = 50
+	velocity.x = -speed
+
 func _physics_process(delta: float) -> void:
+	print(position)
 	if has_gravity and not is_on_floor():
 		velocity += get_gravity() * delta
+		
 	
+	if is_on_floor() and position.x >= max_x:
+		velocity.x = -speed
+	elif is_on_floor() and position.x <= min_x:
+		velocity.x = speed
+	#is_on_floor() is entirely unnecessary
 	move_and_slide()
