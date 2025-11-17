@@ -12,8 +12,10 @@ class_name enemy
 
 @export var max_x: float
 @export var min_x: float
+@export var original_position: Vector2
 
 func _ready() -> void:
+	original_position = position
 	speed = 30
 	max_x = 150
 	min_x = 50
