@@ -14,12 +14,15 @@ class_name enemy
 @export var min_x: float
 @export var original_position: Vector2
 
+@onready var tile_map_layer: TileMapLayer = $"../TileMapLayer"
+
 func _ready() -> void:
 	original_position = position
 	speed = 30
 	max_x = 150
 	min_x = 50
 	velocity.x = -speed
+	print(tile_map_layer.tile_map_data)
 
 func _physics_process(delta: float) -> void:
 	#print(position)
@@ -27,9 +30,8 @@ func _physics_process(delta: float) -> void:
 		velocity += get_gravity() * delta
 		
 	
-	if is_on_floor() and position.x >= max_x:
-		velocity.x = -speed
-	elif is_on_floor() and position.x <= min_x:
-		velocity.x = speed
-	#is_on_floor() is entirely unnecessary
+	#if is_on_floor() and position.x >= max_x:
+		#velocity.x = -speed
+	#elif is_on_floor() and position.x <= min_x:
+		#velocity.x = speed
 	move_and_slide()
