@@ -10,34 +10,29 @@ class_name enemy
 @export var has_gravity: bool = true
 @export var is_alerted: bool = false
 
-@export var max_x: float
-@export var min_x: float
 @export var original_position: Vector2
+@export var ground_detector: CollisionShape2D
 
 @onready var tile_map_layer: TileMapLayer = $"../TileMapLayer"
 
 func _ready() -> void:
 	original_position = position
 	speed = 30
-	max_x = 150
-	min_x = 50
-	#velocity.x = -speed
-	print(tile_map_layer.tile_map_data)
+	velocity.x = -speed
+
 
 func _physics_process(delta: float) -> void:
 	#print(position)
 	if has_gravity and not is_on_floor():
 		velocity += get_gravity() * delta
-		
 	
-	#if is_on_floor() and position.x >= max_x:
-		#velocity.x = -speed
-	#elif is_on_floor() and position.x <= min_x:
-		#velocity.x = speed
 	move_and_slide()
 
 
-
-
 func _on_ground_detector_body_entered(body: Node2D) -> void:
-	pass
+	print(body)
+	if body == tile_map_layer:
+		print("enemy collided with tile_map_layer")
+		print(ground_detector)
+		if ground_detector:
+			print(tile_map_layer.local_to_map(ground_detector.position))

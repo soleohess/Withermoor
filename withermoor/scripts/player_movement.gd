@@ -101,7 +101,8 @@ func handle_jump(_delta) -> bool:
 	
 	if is_on_floor():
 		if not can_jump:
-			print(jump_debug_timer)
+			#print(jump_debug_timer)
+			pass
 		delay_jump_restriction = coyote_time
 		can_jump = true
 	
