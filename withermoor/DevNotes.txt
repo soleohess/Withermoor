@@ -1,0 +1,4 @@
+Collision Layers:
+	1: Ground
+	2: Player
+	3: Enemies

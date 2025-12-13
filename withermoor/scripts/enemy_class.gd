@@ -21,7 +21,7 @@ func _ready() -> void:
 	speed = 30
 	max_x = 150
 	min_x = 50
-	velocity.x = -speed
+	#velocity.x = -speed
 	print(tile_map_layer.tile_map_data)
 
 func _physics_process(delta: float) -> void:
@@ -35,3 +35,9 @@ func _physics_process(delta: float) -> void:
 	#elif is_on_floor() and position.x <= min_x:
 		#velocity.x = speed
 	move_and_slide()
+
+
+
+
+func _on_ground_detector_body_entered(body: Node2D) -> void:
+	pass

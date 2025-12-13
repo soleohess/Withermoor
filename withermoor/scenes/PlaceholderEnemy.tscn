@@ -13,5 +13,13 @@ script = ExtResource("1_g7r85")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_qb6ty")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="enemy_collider" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_2ryta")
+
+[node name="ground_detector" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ground_detector"]
+shape = SubResource("RectangleShape2D_2ryta")
+
+[connection signal="body_entered" from="ground_detector" to="." method="_on_ground_detector_body_entered"]
