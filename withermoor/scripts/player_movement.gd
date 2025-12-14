@@ -53,7 +53,7 @@ func configure_inputs(_input_map: Dictionary):
 				new_key.keycode = input_keycode
 				InputMap.action_add_event(input_dict_key, new_key)
 
-func handle_walk(_delta) -> bool:
+func handle_walk(_delta: float) -> bool:
 	#Note: could change to Input.is_physical_key_pressed()
 	
 	#left walking
@@ -80,7 +80,7 @@ func handle_walk(_delta) -> bool:
 	
 	return (Input.is_action_pressed("left_inputs") or Input.is_action_pressed("right_inputs"))
 
-func handle_jump(_delta) -> bool:
+func handle_jump(_delta: float) -> bool:
 	
 	jump_input_timer += _delta
 	jump_debug_timer += _delta
