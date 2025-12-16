@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://csx15k8tfr5ek"]
+[gd_scene load_steps=6 format=3 uid="uid://csx15k8tfr5ek"]
 
 [ext_resource type="Script" uid="uid://jexqdqdloeiv" path="res://scripts/enemy_class.gd" id="1_g7r85"]
 [ext_resource type="Texture2D" uid="uid://kncabpjcj4qe" path="res://assets/EnemyPlaceholder2.png" id="2_qb6ty"]
@@ -9,11 +9,15 @@ size = Vector2(8, 16)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g7r85"]
 size = Vector2(1, 1.6666663)
 
-[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("ground_detector_left", "ground_detector_right") groups=["enemy"]]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qb6ty"]
+size = Vector2(10, 16)
+
+[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("ground_detector_left", "ground_detector_right", "wall_detector") groups=["enemy"]]
 collision_layer = 4
 script = ExtResource("1_g7r85")
 ground_detector_left = NodePath("ground_detector_left/CollisionShape2D")
 ground_detector_right = NodePath("ground_detector_right/CollisionShape2D")
+wall_detector = NodePath("wall_detector/CollisionShape2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_qb6ty")
@@ -37,5 +41,11 @@ collision_layer = 0
 position = Vector2(6, 6)
 shape = SubResource("RectangleShape2D_g7r85")
 
+[node name="wall_detector" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="wall_detector"]
+shape = SubResource("RectangleShape2D_qb6ty")
+
 [connection signal="body_exited" from="ground_detector_left" to="." method="_on_ground_detector_left_body_exited"]
 [connection signal="body_exited" from="ground_detector_right" to="." method="_on_ground_detector_right_body_exited"]
+[connection signal="body_entered" from="wall_detector" to="." method="_on_wall_detector_body_entered"]

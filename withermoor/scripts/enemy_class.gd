@@ -14,11 +14,13 @@ class_name enemy
 
 @export var ground_detector_left: CollisionShape2D
 @export var ground_detector_right: CollisionShape2D
+@export var wall_detector: CollisionShape2D
 
 @onready var tile_map_layer: TileMapLayer = $"../TileMapLayer"
 
 @onready var original_position: Vector2 = position
 @export var direction: int = -1
+
 
 func _ready() -> void:
 	pass
@@ -34,6 +36,11 @@ func _on_ground_detector_left_body_exited(body: Node2D) -> void:
 			direction *= -1
 
 func _on_ground_detector_right_body_exited(body: Node2D) -> void:
+	if has_default_behavior:
+		if body == tile_map_layer:
+			direction *= -1
+
+func _on_wall_detector_body_entered(body: Node2D) -> void:
 	if has_default_behavior:
 		if body == tile_map_layer:
 			direction *= -1
