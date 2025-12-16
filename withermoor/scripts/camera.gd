@@ -9,4 +9,3 @@ var target_position: Vector2
 func _physics_process(delta: float) -> void:
 	target_position = Vector2((player.position.x + offsetX), (player.position.y + offsetY))
 	position = Vector2(((1 - following_speed) * position.x) + (following_speed * target_position.x), ((1 - following_speed) * position.y) + (following_speed * target_position.y))
-	
