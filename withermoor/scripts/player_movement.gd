@@ -1,10 +1,11 @@
 extends CharacterBody2D
 
 
-var max_x_velocity = 150.0
-var x_acceleration = max_x_velocity / 3
+var max_x_velocity: float = 150.0
+var x_acceleration: float = max_x_velocity / 3
 var startup_x_percent = 0.2
-var jump_velocity = -375.0
+var jump_velocity: float = -375.0
+var direction: int = 1
 
 var min_jump_time: float = 0.04
 var jump_release_rate: float = 1.5
@@ -35,14 +36,15 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 	
-	
 	handle_walk(delta)
 	handle_jump(delta)
 	move_and_slide()
 
+
 func _on_enemy_check_body_entered(body: Node2D) -> void:
 	print("The enemy_check collided with:")
 	print(body)
+
 
 func configure_inputs(_input_map: Dictionary):
 	for input_dict_key in _input_map:
@@ -56,26 +58,29 @@ func configure_inputs(_input_map: Dictionary):
 func handle_walk(_delta: float) -> bool:
 	#Note: could change to Input.is_physical_key_pressed()
 	
-	#left walking
 	if Input.is_action_pressed("left_inputs") and not Input.is_action_pressed("right_inputs"):
-		if velocity.x >= max_x_velocity * startup_x_percent * -1:
-			velocity.x = max_x_velocity * startup_x_percent * -1
-		if velocity.x >= max_x_velocity * -1:
-			velocity.x += x_acceleration * (_delta * 60) * -1
-		else:
-			velocity.x = max_x_velocity * (_delta * 60) * -1
+		#left
+		direction = -1
+	elif Input.is_action_pressed("right_inputs") and not Input.is_action_pressed("left_inputs"):
+		#right
+		direction = 1
+	else:
+		#neither
+		direction = 0
 	
-	#right walking
-	if Input.is_action_pressed("right_inputs") and not Input.is_action_pressed("left_inputs"):
-		if velocity.x <= max_x_velocity * startup_x_percent:
-			velocity.x = max_x_velocity * startup_x_percent
-		if velocity.x <= max_x_velocity:
-			velocity.x += x_acceleration * (_delta * 60)
+	if direction != 0:
+		#walk
+		if abs(velocity.x) <= max_x_velocity * startup_x_percent * (_delta * 60):
+			#start walking
+			velocity.x = max_x_velocity * startup_x_percent * direction * (_delta * 60)
+		if abs(velocity.x) <= max_x_velocity * (_delta * 60):
+			#speed up
+			velocity.x += x_acceleration * direction * (_delta * 60)
 		else:
-			velocity.x = max_x_velocity * (_delta * 60)
-	
-	#deceleration here
-	if not (Input.is_action_pressed("left_inputs") or Input.is_action_pressed("right_inputs")):
+			#keep walking
+			velocity.x = max_x_velocity * direction * (_delta * 60)
+	else:
+		#stop
 		velocity.x /= 1.5 * (_delta * 60)
 	
 	return (Input.is_action_pressed("left_inputs") or Input.is_action_pressed("right_inputs"))
