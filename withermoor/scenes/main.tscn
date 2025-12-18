@@ -61,4 +61,5 @@ position = Vector2(50, -130)
 [node name="Enemy3" parent="." instance=ExtResource("4_jyhfs")]
 position = Vector2(195, -127)
 
+[connection signal="area_entered" from="Player/camera_box" to="Camera2D" method="_on_camera_box_area_entered"]
 [connection signal="area_exited" from="Player/camera_box" to="Camera2D" method="_on_camera_box_area_exited"]

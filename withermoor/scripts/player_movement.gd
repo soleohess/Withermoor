@@ -5,7 +5,8 @@ var max_x_velocity: float = 150.0
 var x_acceleration: float = max_x_velocity / 3
 var startup_x_percent = 0.2
 var jump_velocity: float = -375.0
-var direction: int = 1
+var direction: int = 0
+var facing: int = 1
 
 var min_jump_time: float = 0.04
 var jump_release_rate: float = 1.5
@@ -69,6 +70,9 @@ func handle_walk(_delta: float) -> bool:
 		direction = 0
 	
 	if direction != 0:
+		#facing is only for animation, direction is for movement
+		facing = direction
+		
 		#walk
 		if abs(velocity.x) <= max_x_velocity * startup_x_percent * (_delta * 60):
 			#start walking
