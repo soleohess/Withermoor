@@ -15,6 +15,7 @@ size = Vector2(10, 16)
 [node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("ground_detector_left", "ground_detector_right", "wall_detector") groups=["enemy"]]
 collision_layer = 4
 script = ExtResource("1_g7r85")
+damage = 1.0
 ground_detector_left = NodePath("ground_detector_left/CollisionShape2D")
 ground_detector_right = NodePath("ground_detector_right/CollisionShape2D")
 wall_detector = NodePath("wall_detector/CollisionShape2D")

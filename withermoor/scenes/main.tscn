@@ -54,6 +54,7 @@ tile_set = SubResource("TileSet_tbgi4")
 
 [node name="Enemy" parent="." instance=ExtResource("4_jyhfs")]
 position = Vector2(-233, -126)
+has_default_behavior = false
 
 [node name="Enemy2" parent="." instance=ExtResource("4_jyhfs")]
 position = Vector2(50, -130)

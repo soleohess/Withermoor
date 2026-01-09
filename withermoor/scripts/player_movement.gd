@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-
+#movement
 var max_x_velocity: float = 150.0
 var x_acceleration: float = max_x_velocity / 3
 var startup_x_percent = 0.2
@@ -8,23 +8,33 @@ var jump_velocity: float = -375.0
 var direction: int = 0
 var facing: int = 1
 
-var min_jump_time: float = 0.04
+#jump input variables
+var min_jump_time: float = 0.0
 var jump_release_rate: float = 1.5
-
 var coyote_time: float = 0.06
 var delay_jump_restriction: float = coyote_time
 var can_jump: bool = false
 var jump_input_timer: float = 1.0
-
 var jump_debug_timer: float = 0.0
+
+#health and damage
+var health: float = 10.0
+var damage_zone: Array = [false, null]
+var is_invincible: bool = false
+var iframe_set_time: float = 0.5
+var iframe_timer: float = 0.0
+var sword_damage: float = 2.0
+
 
 #h(t) = 1/2 at^2 + v0 t
 #h_max = h(-v0/a)
 
 var input_map_dict: Dictionary = {
-	"left_inputs": [KEY_LEFT, KEY_A],
-	"right_inputs": [KEY_RIGHT, KEY_D],
-	"jump_inputs": [KEY_SPACE]
+	"left_inputs": [KEY_LEFT],
+	"right_inputs": [KEY_RIGHT],
+	"jump_inputs": [KEY_X, KEY_SPACE],
+	"sword_inputs": [KEY_C],
+	"dash_inputs": [KEY_Z]
 	}
 
 
@@ -33,9 +43,18 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	# Gravity
+	#Gravity
 	if not is_on_floor():
 		velocity += get_gravity() * delta
+	
+	if iframe_timer >= -1:
+		iframe_timer -= delta
+	if iframe_timer <= 0.0:
+		is_invincible = false
+	
+	if damage_zone[0] and damage_zone[1] is enemy:
+		if not is_invincible:
+			take_damage(damage_zone[1].damage)
 	
 	handle_walk(delta)
 	handle_jump(delta)
@@ -45,9 +64,22 @@ func _physics_process(delta: float) -> void:
 func _on_enemy_check_body_entered(body: Node2D) -> void:
 	print("The enemy_check collided with:")
 	print(body)
+	if not is_invincible and body is enemy:
+		damage_zone[0] = true
+		damage_zone[1] = body
 
+func _on_enemy_check_body_exited(body: Node2D) -> void:
+	damage_zone[0] = false
 
-func configure_inputs(_input_map: Dictionary):
+func take_damage(_damage):
+	iframe_timer = iframe_set_time
+	health -= _damage
+	print("Health is now at:")
+	print(health)
+	if health <= 0.0:
+		print("You died!")
+
+func configure_inputs(_input_map: Dictionary) -> void:
 	for input_dict_key in _input_map:
 		InputMap.add_action(input_dict_key)
 		if typeof(input_map_dict[input_dict_key]) == TYPE_ARRAY:
@@ -57,7 +89,7 @@ func configure_inputs(_input_map: Dictionary):
 				InputMap.action_add_event(input_dict_key, new_key)
 
 func handle_walk(_delta: float) -> bool:
-	#Note: could change to Input.is_physical_key_pressed()
+	#Note: should consider the difference between key and physical_key
 	
 	if Input.is_action_pressed("left_inputs") and not Input.is_action_pressed("right_inputs"):
 		#left
@@ -110,8 +142,7 @@ func handle_jump(_delta: float) -> bool:
 	
 	if is_on_floor():
 		if not can_jump:
-			#print(jump_debug_timer)
-			pass
+			print(jump_debug_timer)
 		delay_jump_restriction = coyote_time
 		can_jump = true
 	

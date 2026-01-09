@@ -26,6 +26,9 @@ func _ready() -> void:
 	pass
 
 func _physics_process(delta: float) -> void:
+	if has_gravity and not is_on_floor():
+		velocity += get_gravity() * (delta * 60)
+	
 	if has_default_behavior:
 		default_behavior(delta)
 		move_and_slide()
@@ -47,8 +50,5 @@ func _on_wall_detector_body_entered(body: Node2D) -> void:
 
 
 func default_behavior(_delta: float):
-	if has_gravity and not is_on_floor():
-		velocity += get_gravity() * (_delta * 60)
-	
 	if is_on_floor():
 		velocity.x = speed * direction * (_delta * 60)

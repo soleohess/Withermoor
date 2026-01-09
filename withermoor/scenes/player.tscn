@@ -68,6 +68,5 @@ collision_mask = 4
 position = Vector2(0, -15.5)
 shape = SubResource("RectangleShape2D_4flbx")
 
-[connection signal="area_entered" from="enemy_check" to="." method="_on_enemy_check_area_entered"]
-[connection signal="body_entered" from="enemy_check" to="." method="_on_ground_check_body_entered"]
 [connection signal="body_entered" from="enemy_check" to="." method="_on_enemy_check_body_entered"]
+[connection signal="body_exited" from="enemy_check" to="." method="_on_enemy_check_body_exited"]
