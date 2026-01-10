@@ -19,9 +19,9 @@ var jump_debug_timer: float = 0.0
 
 #health and damage
 var health: float = 10.0
-var damage_zone: Array = [false, null]
+var damage_zones: Array = []
 var is_invincible: bool = false
-var iframe_set_time: float = 0.5
+var iframe_set_time: float = 1.3
 var iframe_timer: float = 0.0
 var sword_damage: float = 2.0
 
@@ -52,9 +52,12 @@ func _physics_process(delta: float) -> void:
 	if iframe_timer <= 0.0:
 		is_invincible = false
 	
-	if damage_zone[0] and damage_zone[1] is enemy:
-		if not is_invincible:
-			take_damage(damage_zone[1].damage)
+	if damage_zones and not is_invincible:
+			if damage_zones[0] is enemy:
+				take_damage(damage_zones[0].damage)
+			else:
+				print("damage_zones contains non enemy object")
+				print(damage_zones)
 	
 	handle_walk(delta)
 	handle_jump(delta)
@@ -65,14 +68,16 @@ func _on_enemy_check_body_entered(body: Node2D) -> void:
 	print("The enemy_check collided with:")
 	print(body)
 	if not is_invincible and body is enemy:
-		damage_zone[0] = true
-		damage_zone[1] = body
+		damage_zones.append(body)
 
 func _on_enemy_check_body_exited(body: Node2D) -> void:
-	damage_zone[0] = false
+	if body is enemy:
+		while damage_zones.has(body):
+			damage_zones.erase(body)
 
 func take_damage(_damage):
 	iframe_timer = iframe_set_time
+	is_invincible = true
 	health -= _damage
 	print("Health is now at:")
 	print(health)
