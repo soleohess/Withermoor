@@ -56,8 +56,10 @@ func _physics_process(delta: float) -> void:
 			if damage_zones[0] is enemy:
 				take_damage(damage_zones[0].damage)
 			else:
-				print("damage_zones contains non enemy object")
-				print(damage_zones)
+				push_warning("damage_zones contains non enemy object at index zero")
+				push_warning("damage_zones: " + str(damage_zones))
+				push_warning("index zero will now be erased")
+				damage_zones.remove_at(0)
 	
 	handle_walk(delta)
 	handle_jump(delta)
