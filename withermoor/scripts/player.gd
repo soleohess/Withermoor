@@ -8,14 +8,15 @@ var jump_velocity: float = -375.0
 var direction: int = 0
 var facing: int = 1
 
-#jump input variables
+#jump input stuff
 var min_jump_time: float = 0.0
 var jump_release_rate: float = 1.5
-var coyote_time: float = 0.06
+const coyote_time: float = 0.1
+const jump_input_buffer: float = 0.1
 var delay_jump_restriction: float = coyote_time
 var can_jump: bool = false
 var jump_input_timer: float = 1.0
-var jump_debug_timer: float = 0.0
+var timer_after_jump: float = 0.0
 
 #health and damage
 var health: float = 10.0
@@ -131,31 +132,33 @@ func handle_walk(_delta: float) -> bool:
 func handle_jump(_delta: float) -> bool:
 	
 	jump_input_timer += _delta
-	jump_debug_timer += _delta
+	timer_after_jump += _delta
 	
 	
 	if Input.is_action_just_pressed("jump_inputs"):
 		#queue the jump
 		jump_input_timer = 0.0
 	
-	if jump_input_timer < 0.1 and can_jump:
+	if jump_input_timer < jump_input_buffer and can_jump:
 		#if you just pressed jump (with input buffering) and can jump
 		velocity.y = jump_velocity * (_delta * 60)
-		jump_debug_timer = 0.0
+		timer_after_jump = 0.0
 		can_jump = false
 	
-	if jump_debug_timer > min_jump_time and velocity.y < 0.0 and not Input.is_action_pressed("jump_inputs"):
+	if timer_after_jump > min_jump_time and velocity.y < 0.0 and not Input.is_action_pressed("jump_inputs"):
+		#this slows the jump if input is released before zenith is reached
+		#gravity is handled in _phisics_process()
 		velocity.y = velocity.y / jump_release_rate
 	
 	if is_on_floor():
 		if not can_jump:
-			print(jump_debug_timer)
+			print(timer_after_jump)
 		delay_jump_restriction = coyote_time
 		can_jump = true
 	
 	elif can_jump:
 		#coyote timer
-		delay_jump_restriction -= 0.01 * (_delta * 60)
+		delay_jump_restriction -= _delta
 		
 		if delay_jump_restriction > 0.0001:
 			can_jump = true
