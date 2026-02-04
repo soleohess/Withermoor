@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://d27r3jdu8srqt"]
+
+[ext_resource type="Texture2D" uid="uid://eq2kqtglnv2b" path="res://assets/placeholder_sword.png" id="1_lg8g7"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_053rj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_lg8g7")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="PlayerSword" type="Area2D"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(0, -25, 0, 25, 98, 15, 98, -15)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(49, 0.5)
+scale = Vector2(0.04890502, 0.048905022)
+sprite_frames = SubResource("SpriteFrames_053rj")
