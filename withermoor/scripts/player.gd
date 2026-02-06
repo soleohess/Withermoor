@@ -24,7 +24,11 @@ var damage_zones: Array = []
 var is_invincible: bool = false
 var iframe_set_time: float = 1.3
 var iframe_timer: float = 0.0
+
+#sword stuff
 var sword_damage: float = 2.0
+var sword_offset: Vector2 = Vector2(5.0, -16.0)
+
 
 
 #h(t) = 1/2 at^2 + v0 t
@@ -167,3 +171,11 @@ func handle_jump(_delta: float) -> bool:
 			can_jump = false
 	
 	return Input.is_action_just_pressed("jump_inputs")
+
+func handle_sword(_delta:float) -> bool:
+	if Input.is_action_just_pressed("sword_inputs"):
+		sword_attack()
+	return Input.is_action_just_pressed("sword_inputs")
+
+func sword_attack() -> void:
+	pass

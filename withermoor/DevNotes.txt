@@ -1,6 +1,6 @@
 Collision Layers:
 	1: Ground
-	2: Player (damage)
-	3: Enemies (damage)
-	4: Enemies (attack) and Hazards
+	2: Player (hurtbox)
+	3: Enemies (hurtbox)
+	4: Enemies (hitbox) and Hazards
 	5: Player (attack)

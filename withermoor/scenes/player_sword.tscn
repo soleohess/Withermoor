@@ -14,11 +14,13 @@ animations = [{
 }]
 
 [node name="PlayerSword" type="Area2D"]
+collision_layer = 16
+collision_mask = 4
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PackedVector2Array(0, -25, 0, 25, 98, 15, 98, -15)
+polygon = PackedVector2Array(0, -12.5, 0, 12.5, 49, 7.5, 49, -7.5)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(49, 0.5)
-scale = Vector2(0.04890502, 0.048905022)
+position = Vector2(25, 0.25)
+scale = Vector2(0.025, 0.025)
 sprite_frames = SubResource("SpriteFrames_053rj")
