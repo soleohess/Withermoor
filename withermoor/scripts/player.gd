@@ -28,7 +28,9 @@ var iframe_timer: float = 0.0
 #sword stuff
 var sword_damage: float = 2.0
 var sword_offset: Vector2 = Vector2(5.0, -16.0)
-
+var sword_delay: float = 0.41
+var sword_timer: float = 0.0
+var can_sword: bool = false
 
 
 #h(t) = 1/2 at^2 + v0 t
@@ -46,30 +48,20 @@ var input_map_dict: Dictionary = {
 func _ready() -> void:
 	configure_inputs(input_map_dict)
 
-
 func _physics_process(delta: float) -> void:
 	#Gravity
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 	
-	if iframe_timer >= -1:
-		iframe_timer -= delta
-	if iframe_timer <= 0.0:
-		is_invincible = false
+	handle_damage(delta)
 	
-	if damage_zones and not is_invincible:
-			if damage_zones[0] is enemy:
-				take_damage(damage_zones[0].damage)
-			else:
-				push_warning("damage_zones contains non enemy object at index zero")
-				push_warning("damage_zones: " + str(damage_zones))
-				push_warning("index zero will now be erased")
-				damage_zones.remove_at(0)
+	handle_sword(delta)
 	
 	handle_walk(delta)
+	
 	handle_jump(delta)
+	
 	move_and_slide()
-
 
 func _on_enemy_check_body_entered(body: Node2D) -> void:
 	print("The enemy_check collided with:")
@@ -82,14 +74,6 @@ func _on_enemy_check_body_exited(body: Node2D) -> void:
 		while damage_zones.has(body):
 			damage_zones.erase(body)
 
-func take_damage(_damage):
-	iframe_timer = iframe_set_time
-	is_invincible = true
-	health -= _damage
-	print("Health is now at:")
-	print(health)
-	if health <= 0.0:
-		print("You died!")
 
 func configure_inputs(_input_map: Dictionary) -> void:
 	for input_dict_key in _input_map:
@@ -99,6 +83,30 @@ func configure_inputs(_input_map: Dictionary) -> void:
 				var new_key = InputEventKey.new()
 				new_key.keycode = input_keycode
 				InputMap.action_add_event(input_dict_key, new_key)
+
+func handle_damage(_delta) -> void:
+	if iframe_timer >= -1.0:
+		iframe_timer -= _delta
+	if iframe_timer <= 0.0:
+		is_invincible = false
+	
+	if damage_zones and not is_invincible:
+			if damage_zones[0] is enemy:
+				take_damage(damage_zones[0].damage)
+			else:
+				push_warning("damage_zones contains non enemy object at index zero")
+				push_warning("damage_zones: " + str(damage_zones))
+				push_warning("index zero will now be erased")
+				damage_zones.remove_at(0)
+
+func take_damage(_damage) -> void:
+	iframe_timer = iframe_set_time
+	is_invincible = true
+	health -= _damage
+	print("Health is now at:")
+	print(health)
+	if health <= 0.0:
+		print("You died!")
 
 func handle_walk(_delta: float) -> bool:
 	#Note: should consider the difference between key and physical_key
@@ -114,7 +122,7 @@ func handle_walk(_delta: float) -> bool:
 		direction = 0
 	
 	if direction != 0:
-		#facing is only for animation, direction is for movement
+		#facing is only for animation and camera, direction is for movement
 		facing = direction
 		
 		#walk
@@ -174,8 +182,16 @@ func handle_jump(_delta: float) -> bool:
 
 func handle_sword(_delta:float) -> bool:
 	if Input.is_action_just_pressed("sword_inputs"):
-		sword_attack()
+		if can_sword:
+			sword_attack()
+			sword_timer = sword_delay
+	
+	if sword_timer >= -1.0:
+		sword_timer -= _delta
+	if sword_timer <= 0.0:
+		can_sword = true
+	
 	return Input.is_action_just_pressed("sword_inputs")
 
 func sword_attack() -> void:
-	pass
+	print("sword happened")
