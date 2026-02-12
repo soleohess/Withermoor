@@ -31,6 +31,8 @@ var sword_offset: Vector2 = Vector2(5.0, -16.0)
 var sword_delay: float = 0.41
 var sword_timer: float = 0.0
 var can_sword: bool = false
+var sword_input_buffer: float = 0.1
+var sword_input_timer: float = 1.0
 
 
 #h(t) = 1/2 at^2 + v0 t
@@ -181,10 +183,17 @@ func handle_jump(_delta: float) -> bool:
 	return Input.is_action_just_pressed("jump_inputs")
 
 func handle_sword(_delta:float) -> bool:
+	sword_input_timer += _delta
+	
 	if Input.is_action_just_pressed("sword_inputs"):
-		if can_sword:
-			sword_attack()
-			sword_timer = sword_delay
+		#queue the sword
+		sword_input_timer = 0.0
+	
+	if sword_input_timer < sword_input_buffer and can_sword:
+		#if you just pressed sword (with input buffering) and can sword
+		sword_attack()
+		can_sword = false
+		sword_timer = sword_delay
 	
 	if sword_timer >= -1.0:
 		sword_timer -= _delta
