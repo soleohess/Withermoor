@@ -1,7 +1,7 @@
 extends Camera2D
 
 @onready var player = %Player
-@onready var camera_box: CollisionShape2D = $"%Player/camera_box/CollisionShape2D"
+@onready var camera_box: CollisionShape2D = %Player
 
 @export var default_offsetX: float = 20.0
 @export var default_offsetY: float = -30.5
