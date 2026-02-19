@@ -33,6 +33,7 @@ var sword_timer: float = 0.0
 var can_sword: bool = false
 var sword_input_buffer: float = 0.1
 var sword_input_timer: float = 1.0
+var sword_scene = "res://scenes/player_sword.tscn"
 
 
 #h(t) = 1/2 at^2 + v0 t
@@ -203,4 +204,5 @@ func handle_sword(_delta:float) -> bool:
 	return Input.is_action_just_pressed("sword_inputs")
 
 func sword_attack() -> void:
+	
 	print("sword happened")
