@@ -27,13 +27,16 @@ var iframe_timer: float = 0.0
 
 #sword stuff
 var sword_damage: float = 2.0
-var sword_offset: Vector2 = Vector2(5.0, -16.0)
 var sword_delay: float = 0.41
 var sword_timer: float = 0.0
 var can_sword: bool = false
 var sword_input_buffer: float = 0.1
 var sword_input_timer: float = 1.0
-var sword_scene = "res://scenes/player_sword.tscn"
+@onready var sword_scene = %PlayerSword
+var sword_offset_dict: Dictionary = {
+	"left": Vector2(-5.0, -16.0),
+	"right": Vector2(5.0, -16.0)
+}
 
 
 #h(t) = 1/2 at^2 + v0 t
@@ -204,5 +207,17 @@ func handle_sword(_delta:float) -> bool:
 	return Input.is_action_just_pressed("sword_inputs")
 
 func sword_attack() -> void:
+	print("sword function happened")
+	if sword_scene and sword_scene.get_node("CollisionPolygon2D"):
+		if facing == -1:
+			#swing left
+			sword_scene.position = sword_offset_dict["left"]
+			sword_scene.set_scale(Vector2(-1.0, 1.0))
+		elif facing == 1:
+			#swing right
+			sword_scene.position = sword_offset_dict["right"]
+			sword_scene.set_scale(Vector2(1.0, 1.0))
+		
+		sword_scene.set_visible(true)
+		sword_scene.get_node("CollisionPolygon2D").set_deferred("disabled", false)
 	
-	print("sword happened")
