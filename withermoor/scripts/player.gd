@@ -19,7 +19,7 @@ var jump_input_timer: float = 1.0
 var timer_after_jump: float = 0.0
 
 #health and damage
-var health: float = 10.0
+var health: float = 10.0 
 var damage_zones: Array = []
 var is_invincible: bool = false
 var iframe_set_time: float = 1.3
@@ -27,13 +27,16 @@ var iframe_timer: float = 0.0
 
 #sword stuff
 var sword_damage: float = 2.0
-var sword_offset: Vector2 = Vector2(5.0, -16.0)
 var sword_delay: float = 0.41
 var sword_timer: float = 0.0
 var can_sword: bool = false
 var sword_input_buffer: float = 0.1
 var sword_input_timer: float = 1.0
-var sword_scene = "res://scenes/player_sword.tscn"
+@onready var sword_scene = %PlayerSword
+var sword_offset_dict: Dictionary = {
+	"left": Vector2(-5.0, -16.0),
+	"right": Vector2(5.0, -16.0)
+}
 
 
 #h(t) = 1/2 at^2 + v0 t
@@ -44,6 +47,8 @@ var input_map_dict: Dictionary = {
 	"right_inputs": [KEY_RIGHT],
 	"jump_inputs": [KEY_X, KEY_SPACE],
 	"sword_inputs": [KEY_C],
+	"up_inputs": [KEY_UP],
+	"down_inputs": [KEY_DOWN],
 	"dash_inputs": [KEY_Z]
 	}
 
@@ -87,7 +92,7 @@ func configure_inputs(_input_map: Dictionary) -> void:
 				new_key.keycode = input_keycode
 				InputMap.action_add_event(input_dict_key, new_key)
 
-func handle_damage(_delta) -> void:
+func handle_damage(_delta: float) -> void:
 	if iframe_timer >= -1.0:
 		iframe_timer -= _delta
 	if iframe_timer <= 0.0:
@@ -102,7 +107,7 @@ func handle_damage(_delta) -> void:
 				push_warning("index zero will now be erased")
 				damage_zones.remove_at(0)
 
-func take_damage(_damage) -> void:
+func take_damage(_damage: float) -> void:
 	iframe_timer = iframe_set_time
 	is_invincible = true
 	health -= _damage
@@ -183,7 +188,7 @@ func handle_jump(_delta: float) -> bool:
 	
 	return Input.is_action_just_pressed("jump_inputs")
 
-func handle_sword(_delta:float) -> bool:
+func handle_sword(_delta: float) -> bool:
 	sword_input_timer += _delta
 	
 	if Input.is_action_just_pressed("sword_inputs"):
@@ -199,10 +204,30 @@ func handle_sword(_delta:float) -> bool:
 	if sword_timer >= -1.0:
 		sword_timer -= _delta
 	if sword_timer <= 0.0:
-		can_sword = true
+		if not can_sword:
+			sword_finish()
+			can_sword = true
 	
 	return Input.is_action_just_pressed("sword_inputs")
 
 func sword_attack() -> void:
+	print("sword_attack function happened")
+	if sword_scene and sword_scene.get_node("CollisionPolygon2D"):
+		if facing == -1:
+			#swing left
+			sword_scene.position = sword_offset_dict["left"]
+			sword_scene.set_scale(Vector2(-1.0, 1.0))
+		elif facing == 1:
+			#swing right
+			sword_scene.position = sword_offset_dict["right"]
+			sword_scene.set_scale(Vector2(1.0, 1.0))
+		
+		sword_scene.set_visible(true)
+		sword_scene.get_node("CollisionPolygon2D").set_deferred("disabled", false)
+
+func sword_finish() -> void:
+	print("sword_finish function happened")
+	if sword_scene and sword_scene.get_node("CollisionPolygon2D"):
+		sword_scene.set_visible(false)
+		sword_scene.get_node("CollisionPolygon2D").set_deferred("disabled", true)
 	
-	print("sword happened")
