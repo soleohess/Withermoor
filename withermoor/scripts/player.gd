@@ -27,8 +27,10 @@ var iframe_timer: float = 0.0
 
 #sword stuff
 var sword_damage: float = 2.0
-var sword_delay: float = 0.41
-var sword_timer: float = 0.0
+var sword_delay_time: float = 0.41
+var sword_swing_time: float = 0.2
+var sword_delay_timer: float = 0.0
+var sword_swing_timer: float = 0.0
 var can_sword: bool = false
 var sword_input_buffer: float = 0.1
 var sword_input_timer: float = 1.0
@@ -199,14 +201,21 @@ func handle_sword(_delta: float) -> bool:
 		#if you just pressed sword (with input buffering) and can sword
 		sword_attack()
 		can_sword = false
-		sword_timer = sword_delay
+		sword_delay_timer = sword_delay_time
+		sword_swing_timer = sword_swing_time
+		
 	
-	if sword_timer >= -1.0:
-		sword_timer -= _delta
-	if sword_timer <= 0.0:
+	if sword_delay_timer >= -1.0:
+		sword_delay_timer -= _delta
+	if sword_swing_timer >= -1.0:
+		sword_swing_timer -= _delta
+	
+	if sword_delay_timer <= 0.0:
 		if not can_sword:
-			sword_finish()
 			can_sword = true
+	if sword_swing_timer <= 0.0:
+		if sword_scene and sword_scene.is_visible():
+			sword_finish()
 	
 	return Input.is_action_just_pressed("sword_inputs")
 
