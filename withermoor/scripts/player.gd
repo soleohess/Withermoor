@@ -37,7 +37,9 @@ var sword_input_timer: float = 1.0
 @onready var sword_scene = %PlayerSword
 var sword_offset_dict: Dictionary = {
 	"left": Vector2(-5.0, -16.0),
-	"right": Vector2(5.0, -16.0)
+	"right": Vector2(5.0, -16.0),
+	"up": Vector2(0.0, -32.0),
+	"down": Vector2(0.0, 0.0)
 }
 
 
@@ -57,6 +59,9 @@ var input_map_dict: Dictionary = {
 
 func _ready() -> void:
 	configure_inputs(input_map_dict)
+	if sword_scene and sword_scene.get_node("CollisionPolygon2D"):
+		sword_scene.set_visible(false)
+		sword_scene.get_node("CollisionPolygon2D").set_deferred("disabled", true)
 
 func _physics_process(delta: float) -> void:
 	#Gravity
@@ -222,14 +227,37 @@ func handle_sword(_delta: float) -> bool:
 func sword_attack() -> void:
 	print("sword_attack function happened")
 	if sword_scene and sword_scene.get_node("CollisionPolygon2D"):
+		sword_scene.set_rotation_degrees(0.0)
+		
 		if facing == -1:
 			#swing left
 			sword_scene.position = sword_offset_dict["left"]
 			sword_scene.set_scale(Vector2(-1.0, 1.0))
+			
+			if Input.is_action_pressed("up_inputs"):
+				#swing up while facing left
+				sword_scene.position = sword_offset_dict["up"]
+				sword_scene.set_rotation_degrees(90.0)
+			
+			if not is_on_floor() and Input.is_action_pressed("down_inputs"):
+				#swing down while in the air and facing left
+				sword_scene.position = sword_offset_dict["down"]
+				sword_scene.set_rotation_degrees(270.0)
+		
 		elif facing == 1:
 			#swing right
 			sword_scene.position = sword_offset_dict["right"]
 			sword_scene.set_scale(Vector2(1.0, 1.0))
+			
+			if Input.is_action_pressed("up_inputs"):
+				#swing up while facing right
+				sword_scene.position = sword_offset_dict["up"]
+				sword_scene.set_rotation_degrees(270.0)
+			
+			if not is_on_floor() and Input.is_action_pressed("down_inputs"):
+				#swing down while in the air and facing right
+				sword_scene.position = sword_offset_dict["down"]
+				sword_scene.set_rotation_degrees(90.0)
 		
 		sword_scene.set_visible(true)
 		sword_scene.get_node("CollisionPolygon2D").set_deferred("disabled", false)

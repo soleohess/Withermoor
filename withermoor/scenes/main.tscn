@@ -42,6 +42,7 @@ shape = SubResource("RectangleShape2D_tbgi4")
 
 [node name="Player" parent="." instance=ExtResource("2_0wfyh")]
 unique_name_in_owner = true
+position = Vector2(0, -50)
 
 [node name="camera_box" type="Area2D" parent="Player"]
 unique_name_in_owner = true
@@ -54,8 +55,6 @@ shape = SubResource("RectangleShape2D_jyhfs")
 
 [node name="PlayerSword" parent="Player" instance=ExtResource("2_tbgi4")]
 unique_name_in_owner = true
-visible = false
-position = Vector2(5, -16)
 
 [node name="Room" type="Node2D" parent="."]
 
