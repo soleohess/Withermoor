@@ -1,3 +1,9 @@
-[gd_scene format=3 uid="uid://cjm3ioh6p0e0y"]
+[gd_scene load_steps=2 format=3 uid="uid://cjm3ioh6p0e0y"]
+
+[ext_resource type="Script" uid="uid://c1lgetoysp7yf" path="res://scripts/mole.gd" id="1_wc5u6"]
 
 [node name="Mole" type="Node2D"]
+script = ExtResource("1_wc5u6")
+has_default_behavior = false
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
