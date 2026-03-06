@@ -3,7 +3,7 @@ class_name enemy
 
 @export var has_default_behavior: bool = true
 @export var health: float = 1.0
-@export var speed: float = 40
+@export var speed: float = 40.0
 @export var damage: float
 @export var sprite: Sprite2D
 @export var does_contact_damage: bool = false

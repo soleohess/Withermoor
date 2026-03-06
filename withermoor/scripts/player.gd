@@ -226,6 +226,7 @@ func handle_sword(_delta: float) -> bool:
 
 func sword_attack() -> void:
 	print("sword_attack function happened")
+	
 	if sword_scene and sword_scene.get_node("CollisionPolygon2D"):
 		sword_scene.set_rotation_degrees(0.0)
 		
@@ -261,6 +262,9 @@ func sword_attack() -> void:
 		
 		sword_scene.set_visible(true)
 		sword_scene.get_node("CollisionPolygon2D").set_deferred("disabled", false)
+	
+	else:
+		push_error("sword object does not exist")
 
 func sword_finish() -> void:
 	print("sword_finish function happened")
