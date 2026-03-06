@@ -17,6 +17,7 @@ class_name enemy
 @export var wall_detector: CollisionShape2D
 
 @onready var tile_map_layer: TileMapLayer = $"../TileMapLayer"
+@onready var sword_scene = %PlayerSword
 
 @onready var original_position: Vector2 = position
 @export var direction: int = -1
@@ -48,6 +49,10 @@ func _on_wall_detector_body_entered(body: Node2D) -> void:
 		if body == tile_map_layer:
 			direction *= -1
 
+func _on_enemy_hurtbox_body_entered(body: Node2D) -> void:
+	if body == sword_scene:
+		#take damage
+		pass
 
 func default_behavior(_delta: float):
 	if is_on_floor():
