@@ -1,5 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://d27r3jdu8srqt"]
+[gd_scene load_steps=5 format=3 uid="uid://d27r3jdu8srqt"]
 
+[ext_resource type="Script" uid="uid://6xm3jtdmtqah" path="res://scripts/player_sword.gd" id="1_053rj"]
 [ext_resource type="Texture2D" uid="uid://eq2kqtglnv2b" path="res://assets/placeholder_sword.png" id="1_lg8g7"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_053rj"]
@@ -19,6 +20,7 @@ size = Vector2(18, 5)
 [node name="PlayerSword" type="Area2D"]
 collision_layer = 16
 collision_mask = 4
+script = ExtResource("1_053rj")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(0, -12.5, 0, 12.5, 49, 7.5, 49, -7.5)

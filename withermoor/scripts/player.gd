@@ -62,6 +62,9 @@ func _ready() -> void:
 	if sword_scene and sword_scene.get_node("CollisionPolygon2D"):
 		sword_scene.set_visible(false)
 		sword_scene.get_node("CollisionPolygon2D").set_deferred("disabled", true)
+		sword_scene.damage = sword_damage
+	else:
+		push_error("sword object does not exist")
 
 func _physics_process(delta: float) -> void:
 	#Gravity
@@ -107,7 +110,7 @@ func handle_damage(_delta: float) -> void:
 	
 	if damage_zones and not is_invincible:
 			if damage_zones[0] is enemy:
-				take_damage(damage_zones[0].damage)
+				take_damage(damage_zones[0].contact_damage)
 			else:
 				push_warning("damage_zones contains non enemy object at index zero")
 				push_warning("damage_zones: " + str(damage_zones))

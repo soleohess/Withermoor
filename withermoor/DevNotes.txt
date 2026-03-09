@@ -9,3 +9,4 @@ Note to collaborators:
 	We only need Area2D objects for hurtboxes (or other detectors).
 	Area2D objects detect collisions and can trigger scripts.
 	Colliders simply cause collisions to happen, and are for hitboxes.
+	Area2D objects can also be used for hitboxes.
