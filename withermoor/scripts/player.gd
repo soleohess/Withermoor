@@ -53,7 +53,8 @@ var input_map_dict: Dictionary = {
 	"sword_inputs": [KEY_C],
 	"up_inputs": [KEY_UP],
 	"down_inputs": [KEY_DOWN],
-	"dash_inputs": [KEY_Z]
+	"dash_inputs": [KEY_Z],
+	"light_test": [KEY_L]
 	}
 
 
@@ -80,6 +81,10 @@ func _physics_process(delta: float) -> void:
 	handle_jump(delta)
 	
 	move_and_slide()
+
+func _input(event: InputEvent) -> void:
+	if event.is_action("light_test"):
+		print("test worked")
 
 func _on_enemy_check_body_entered(body: Node2D) -> void:
 	print("The enemy_check collided with:")
