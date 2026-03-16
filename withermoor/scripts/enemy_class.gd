@@ -10,6 +10,7 @@ class_name enemy
 @export var has_gravity: bool = true
 @export var is_alerted: bool = false
 @export var is_damageable: bool = true
+@export var dmg_flash_color: Color
 
 #relevant child nodes
 @export var sprite: Sprite2D
