@@ -28,6 +28,7 @@ wall_detector = NodePath("wall_detector/CollisionShape2D")
 texture = ExtResource("2_qb6ty")
 
 [node name="enemy_collider" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("RectangleShape2D_2ryta")
 
 [node name="ground_detector_left" type="Area2D" parent="."]
@@ -47,11 +48,13 @@ position = Vector2(6, 6)
 shape = SubResource("RectangleShape2D_g7r85")
 
 [node name="wall_detector" type="Area2D" parent="."]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="wall_detector"]
 shape = SubResource("RectangleShape2D_qb6ty")
 
 [node name="enemy_hurtbox" type="Area2D" parent="."]
+visible = false
 collision_layer = 4
 collision_mask = 16
 

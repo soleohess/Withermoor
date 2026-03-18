@@ -85,6 +85,8 @@ func _physics_process(delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	if event.is_action("light_test"):
 		print("test worked")
+		modulate = modulate.lerp(Color(1.0, 1.0, 1.0, 1.0), 0.1)
+		print(modulate)
 
 func _on_enemy_check_body_entered(body: Node2D) -> void:
 	print("The enemy_check collided with:")
