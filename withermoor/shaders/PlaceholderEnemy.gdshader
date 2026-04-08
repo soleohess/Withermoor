@@ -1,8 +1,7 @@
 shader_type canvas_item;
 
-uniform float red = 1.0;
-uniform float green = 0.5;
-uniform float blue = 1.0;
+uniform vec4 filter_color = vec4(1.0, 0.5, 1.0, 1.0);
+uniform float weight = 0.5;
 
 void vertex() {
 	// Called for every vertex the material is visible on.
@@ -10,10 +9,8 @@ void vertex() {
 
 void fragment() {
 	// Called for every pixel the material is visible on.
-	COLOR = texture(TEXTURE, UV);
-	COLOR.r = red;
-	COLOR.g = green;
-	COLOR.b = blue;
+	//COLOR = texture(TEXTURE, UV);
+	COLOR = (1.0-weight)*COLOR + weight*filter_color;
 }
 
 //void light() {

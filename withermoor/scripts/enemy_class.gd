@@ -25,6 +25,7 @@ class_name enemy
 #initial conditions
 @onready var original_position: Vector2 = position
 @export var direction: int = -1
+var is_flashing: bool = false
 
 
 func _ready() -> void:
@@ -65,9 +66,13 @@ func default_behavior(_delta: float):
 
 func take_damage(_damage: float) -> void:
 	health -= _damage
+	is_flashing = true
 	print("enemy has " + str(health) + " health")
 	if health <= 0.0:
 		death()
+
+func flash(_delta: float) -> void:
+	pass
 
 func death() -> void:
 	#the enemy dies

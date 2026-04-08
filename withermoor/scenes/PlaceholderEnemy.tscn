@@ -1,15 +1,13 @@
 [gd_scene load_steps=9 format=3 uid="uid://csx15k8tfr5ek"]
 
 [ext_resource type="Script" uid="uid://jexqdqdloeiv" path="res://scripts/enemy_class.gd" id="1_g7r85"]
-[ext_resource type="Shader" uid="uid://c40m2u4q1a1gv" path="res://scenes/PlaceholderEnemy.gdshader" id="2_2ryta"]
+[ext_resource type="Shader" uid="uid://c40m2u4q1a1gv" path="res://shaders/PlaceholderEnemy.gdshader" id="2_2ryta"]
 [ext_resource type="Texture2D" uid="uid://kncabpjcj4qe" path="res://assets/EnemyPlaceholder2.png" id="2_qb6ty"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pkedn"]
 shader = ExtResource("2_2ryta")
-shader_parameter/red = 0.5
-shader_parameter/green = 0.5
-shader_parameter/blue = 0.5
-shader_parameter/weight = 0.8
+shader_parameter/filter_color = Vector4(1, 1, 1, 1)
+shader_parameter/weight = 1.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2ryta"]
 size = Vector2(8, 16)

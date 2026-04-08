@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+
 #movement
 var max_x_velocity: float = 150.0
 var x_acceleration: float = max_x_velocity / 3

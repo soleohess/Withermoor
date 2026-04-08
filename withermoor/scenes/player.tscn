@@ -1,11 +1,16 @@
 [gd_scene load_steps=12 format=3 uid="uid://be0q02rwmlpb0"]
 
 [ext_resource type="Script" uid="uid://b0doh3ye7ida6" path="res://scripts/player.gd" id="1_g2els"]
-[ext_resource type="Shader" uid="uid://cl6shaym2e6xa" path="res://scenes/player.gdshader" id="2_dqkch"]
+[ext_resource type="Shader" uid="uid://cl6shaym2e6xa" path="res://shaders/player.gdshader" id="2_dqkch"]
 [ext_resource type="Texture2D" uid="uid://cxqel3ivqbelm" path="res://assets/playerSpritesheetPlaceholder.png" id="2_qhqgy"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_qlg0r"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qhqgy"]
 shader = ExtResource("2_dqkch")
+shader_parameter/red = 1.0
+shader_parameter/green = 0.5
+shader_parameter/blue = 1.0
+shader_parameter/opacity = 1.0
+shader_parameter/weight = 0.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3mip4"]
 atlas = ExtResource("2_qhqgy")
@@ -54,7 +59,7 @@ collision_layer = 2
 script = ExtResource("1_g2els")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-material = SubResource("ShaderMaterial_qlg0r")
+material = SubResource("ShaderMaterial_qhqgy")
 position = Vector2(0, -16)
 scale = Vector2(0.503906, 0.503906)
 sprite_frames = SubResource("SpriteFrames_nsdob")

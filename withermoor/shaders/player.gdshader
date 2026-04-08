@@ -1,8 +1,10 @@
 shader_type canvas_item;
 
-uniform float red = 0.5;
+uniform float red = 1.0;
 uniform float green = 0.5;
 uniform float blue = 1.0;
+uniform float opacity = 1.0;
+
 uniform float weight = 0.0;
 
 void vertex() {
@@ -15,6 +17,7 @@ void fragment() {
 	COLOR.r = (1.0-weight)*COLOR.r + weight*red;
 	COLOR.g = (1.0-weight)*COLOR.g + weight*green;
 	COLOR.b = (1.0-weight)*COLOR.b + weight*blue;
+	COLOR.a = (1.0-weight)*COLOR.a + weight*opacity;
 }
 
 //void light() {
