@@ -6,11 +6,8 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qhqgy"]
 shader = ExtResource("2_dqkch")
-shader_parameter/red = 1.0
-shader_parameter/green = 0.5
-shader_parameter/blue = 1.0
-shader_parameter/opacity = 1.0
-shader_parameter/weight = 0.0
+shader_parameter/filter_color = Vector4(1, 0.5, 1, 1)
+shader_parameter/weight = 0.9
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3mip4"]
 atlas = ExtResource("2_qhqgy")

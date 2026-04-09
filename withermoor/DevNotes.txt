@@ -10,3 +10,7 @@ Note to collaborators:
 	Area2D objects detect collisions and can trigger scripts.
 	Colliders simply cause collisions to happen, and are for hitboxes.
 	Area2D objects can also be used for hitboxes.
+
+Another Note:
+	Modifying the shader variables by editing the code (as opposed to using the inspector or running code that modifies the variables)
+	will not change the in-game texture.

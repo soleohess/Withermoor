@@ -1,13 +1,24 @@
-[gd_scene load_steps=9 format=3 uid="uid://csx15k8tfr5ek"]
+[gd_scene load_steps=10 format=3 uid="uid://csx15k8tfr5ek"]
 
 [ext_resource type="Script" uid="uid://jexqdqdloeiv" path="res://scripts/enemy_class.gd" id="1_g7r85"]
 [ext_resource type="Shader" uid="uid://c40m2u4q1a1gv" path="res://shaders/PlaceholderEnemy.gdshader" id="2_2ryta"]
 [ext_resource type="Texture2D" uid="uid://kncabpjcj4qe" path="res://assets/EnemyPlaceholder2.png" id="2_qb6ty"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_pkedn"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qb6ty"]
 shader = ExtResource("2_2ryta")
-shader_parameter/filter_color = Vector4(1, 1, 1, 1)
-shader_parameter/weight = 1.0
+shader_parameter/filter_color = Vector4(1, 0.5, 1, 1)
+shader_parameter/weight = 0.9
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qb6ty"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_qb6ty")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2ryta"]
 size = Vector2(8, 16)
@@ -25,14 +36,14 @@ size = Vector2(8, 16)
 collision_layer = 8
 script = ExtResource("1_g7r85")
 dmg_flash_color = Color(1, 1, 1, 1)
-sprite = NodePath("Sprite2D")
+sprite = NodePath("")
 ground_detector_left = NodePath("ground_detector_left/CollisionShape2D")
 ground_detector_right = NodePath("ground_detector_right/CollisionShape2D")
 wall_detector = NodePath("wall_detector/CollisionShape2D")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_pkedn")
-texture = ExtResource("2_qb6ty")
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_qb6ty")
+sprite_frames = SubResource("SpriteFrames_qb6ty")
 
 [node name="enemy_collider" type="CollisionShape2D" parent="."]
 visible = false
