@@ -15,7 +15,7 @@ var is_flashing: bool = false
 @export var flash_color: Color = Color(1.0, 1.0, 1.0, 1.0)
 
 #relevant child nodes
-@export var sprite: Sprite2D
+@export var sprite: AnimatedSprite2D
 @export var ground_detector_left: CollisionShape2D
 @export var ground_detector_right: CollisionShape2D
 @export var wall_detector: CollisionShape2D
@@ -31,7 +31,7 @@ var is_flashing: bool = false
 
 func _ready() -> void:
 	sprite.material.set_shader_parameter("filter_color", flash_color)
-	sprite.material.COLOR.a = 0.0;
+	sprite.material.set_shader_parameter("weight", 0.0)
 
 func _physics_process(delta: float) -> void:
 	if has_gravity and not is_on_floor():
@@ -42,11 +42,11 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 	
 	if is_flashing:
-		sprite.material.COLOR.a = 0.9;
-		is_flashing = false;
+		sprite.material.set_shader_parameter("weight", 0.9)
+		is_flashing = false
 	
 	if sprite.material.COLOR.a > 0.0:
-		sprite.material.COLOR.a -= delta;
+		sprite.material.COLOR.a -= delta
 
 func _on_ground_detector_left_body_exited(body: Node2D) -> void:
 	if has_default_behavior:
