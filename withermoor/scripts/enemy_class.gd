@@ -11,6 +11,8 @@ class_name enemy
 @export var is_alerted: bool = false
 @export var is_damageable: bool = true
 @export var dmg_flash_color: Color
+var is_flashing: bool = false
+@export var flash_color: Color = Color(1.0, 1.0, 1.0, 1.0)
 
 #relevant child nodes
 @export var sprite: Sprite2D
@@ -25,11 +27,11 @@ class_name enemy
 #initial conditions
 @onready var original_position: Vector2 = position
 @export var direction: int = -1
-var is_flashing: bool = false
 
 
 func _ready() -> void:
-	pass
+	sprite.material.set_shader_parameter("filter_color", flash_color)
+	sprite.material.COLOR.a = 0.0;
 
 func _physics_process(delta: float) -> void:
 	if has_gravity and not is_on_floor():
@@ -38,6 +40,13 @@ func _physics_process(delta: float) -> void:
 	if has_default_behavior:
 		default_behavior(delta)
 		move_and_slide()
+	
+	if is_flashing:
+		sprite.material.COLOR.a = 0.9;
+		is_flashing = false;
+	
+	if sprite.material.COLOR.a > 0.0:
+		sprite.material.COLOR.a -= delta;
 
 func _on_ground_detector_left_body_exited(body: Node2D) -> void:
 	if has_default_behavior:
@@ -70,9 +79,6 @@ func take_damage(_damage: float) -> void:
 	print("enemy has " + str(health) + " health")
 	if health <= 0.0:
 		death()
-
-func flash(_delta: float) -> void:
-	pass
 
 func death() -> void:
 	#the enemy dies
