@@ -45,8 +45,8 @@ func _physics_process(delta: float) -> void:
 		sprite.material.set_shader_parameter("weight", 0.9)
 		is_flashing = false
 	
-	if sprite.material.COLOR.a > 0.0:
-		sprite.material.COLOR.a -= delta
+	if sprite.material.get_shader_parameter("weight") > 0.0:
+		sprite.material.set_shader_parameter("weight", sprite.material.get_shader_parameter("weight") - delta)
 
 func _on_ground_detector_left_body_exited(body: Node2D) -> void:
 	if has_default_behavior:
