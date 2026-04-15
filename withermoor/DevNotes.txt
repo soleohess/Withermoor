@@ -14,3 +14,7 @@ Note to collaborators:
 Another Note:
 	Modifying the shader variables by editing the code (as opposed to using the inspector or running code that modifies the variables)
 	will not change the in-game texture.
+
+Bugs/Glitches:
+	The enemy turnaround stops working if speed is above 93.15810012817382
+	(I would experimantally determine more decimal places, but floats in Godot only calculate to 14 decimal places)
