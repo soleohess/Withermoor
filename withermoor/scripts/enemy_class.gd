@@ -30,6 +30,7 @@ var is_flashing: bool = false
 
 
 func _ready() -> void:
+	sprite.material = sprite.material.duplicate()
 	sprite.material.set_shader_parameter("filter_color", flash_color)
 	sprite.material.set_shader_parameter("weight", 0.0)
 
