@@ -178,7 +178,8 @@ func handle_jump(_delta: float) -> bool:
 		jump_input_timer = 0.0
 	
 	if jump_input_timer < jump_input_buffer and can_jump:
-		#if you just pressed jump (with input buffering) and can jump
+		#if you just pressed jump (with input buffering) and can jump,
+		#jump
 		velocity.y = jump_velocity * (_delta * 60)
 		timer_after_jump = 0.0
 		can_jump = false
