@@ -18,3 +18,6 @@ Another Note:
 Bugs/Glitches:
 	The enemy turnaround stops working if speed is above 93.15810012817382
 	(I would experimantally determine more decimal places, but floats in Godot only calculate to 14 decimal places)
+	
+	If the player swings the sword and hits an enemy, if the enemy very quickly leaves the sword area and reenters it,
+	the enemy will take damage twice.
