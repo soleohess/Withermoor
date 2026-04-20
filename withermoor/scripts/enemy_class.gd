@@ -23,6 +23,7 @@ var is_flashing: bool = false
 #other relevant nodes
 @onready var tile_map_layer: TileMapLayer = $"../TileMapLayer"
 @onready var sword_scene = %PlayerSword
+@onready var player = %Player
 
 #initial conditions
 @onready var original_position: Vector2 = position
@@ -67,6 +68,7 @@ func _on_wall_detector_body_entered(body: Node2D) -> void:
 func _on_enemy_hurtbox_area_entered(area: Area2D) -> void:
 	if area == sword_scene:
 		print("sword hit enemy")
+		player.sword_attacked_zones.append(self)
 		if is_damageable:
 			take_damage(area.damage)
 

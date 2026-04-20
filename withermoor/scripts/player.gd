@@ -42,6 +42,7 @@ var sword_offset_dict: Dictionary = {
 	"up": Vector2(0.0, -32.0),
 	"down": Vector2(0.0, 0.0)
 }
+var sword_attacked_zones: Array = []
 
 
 #h(t) = 1/2 at^2 + v0 t
