@@ -284,4 +284,5 @@ func sword_finish() -> void:
 	if sword_scene and sword_scene.get_node("CollisionPolygon2D"):
 		sword_scene.set_visible(false)
 		sword_scene.get_node("CollisionPolygon2D").set_deferred("disabled", true)
+		sword_attacked_zones.clear()
 	

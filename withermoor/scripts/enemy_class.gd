@@ -66,7 +66,8 @@ func _on_wall_detector_body_entered(body: Node2D) -> void:
 			direction *= -1
 
 func _on_enemy_hurtbox_area_entered(area: Area2D) -> void:
-	if area == sword_scene:
+	if area == sword_scene and not player.sword_attacked_zones.has(self):
+		#if enemy is hit by the sword, and wasn't hit with the same swing
 		print("sword hit enemy")
 		player.sword_attacked_zones.append(self)
 		if is_damageable:
