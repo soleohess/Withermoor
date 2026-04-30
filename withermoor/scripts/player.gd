@@ -32,9 +32,6 @@ var sword_delay_time: float = 0.41
 var sword_swing_time: float = 0.2
 var sword_delay_timer: float = 0.0
 var sword_swing_timer: float = 0.0
-var sword_knockback: Vector2 = Vector2.ZERO
-var sword_knockback_direction: Vector2 = Vector2.ZERO
-var sword_knockback_cooldown: float = 1.0
 var can_sword: bool = false
 var sword_input_buffer: float = 0.1
 var sword_input_timer: float = 1.0
@@ -46,6 +43,10 @@ var sword_offset_dict: Dictionary = {
 	"down": Vector2(0.0, 0.0)
 }
 var sword_attacked_zones: Array = []
+
+#knockback
+var sword_knockback: Vector2 = Vector2.ZERO
+var sword_knockback_direction: Vector2 = Vector2.ZERO
 
 
 #h(t) = 1/2 at^2 + v0 t
